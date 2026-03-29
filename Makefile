@@ -892,7 +892,11 @@ KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-num-threads=0 \
 		   -mllvm -polly-omp-backend=LLVM \
 		   -mllvm -polly-scheduling=dynamic \
-		   -mllvm -polly-scheduling-chunksize=1
+		   -mllvm -polly-scheduling-chunksize=1 \
+		   -march=armv9-a
+		   
+KBUILD_AFLAGS   += -O3 -march=armv9-a
+KBUILD_LDFLAGS  += -O3
 
 # Tell gcc to never replace conditional load with a non-conditional one
 ifdef CONFIG_CC_IS_GCC
@@ -1045,6 +1049,8 @@ KBUILD_CFLAGS	+= $(CC_FLAGS_SCS)
 endif
 export CC_FLAGS_SCS
 endif
+
+CC_FLAGS_LTO	:= -flto=thin -fsplit-lto-unit
 
 ifdef CONFIG_LTO_CLANG
 ifdef CONFIG_LTO_CLANG_THIN
